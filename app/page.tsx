@@ -5,6 +5,7 @@ import Link from 'next/link'
 import ArticleCard from './components/ArticleCard'
 import AddBlogModal from './components/AddBlogModal'
 import ConnectionLine from './components/ConnectionLine'
+import { Article } from './types'
 
 interface Position {
   x: number;
@@ -16,15 +17,6 @@ interface Connection {
   endCard: string;
   startPosition: string;
   endPosition: string;
-}
-
-interface Article {
-  id: string;
-  title: string;
-  content: string;
-  author: string;
-  createdAt: string;
-  color?: string;
 }
 
 export default function Home() {
