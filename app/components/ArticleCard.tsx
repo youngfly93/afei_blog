@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Link from 'next/link';
 import ConnectionPoint from './ConnectionPoint';
 import EditBlogModal from './EditBlogModal';
 
@@ -88,7 +87,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
     setIsEditModalOpen(true);
   };
 
-  const handleSave = (id: string, updates: any) => {
+  const handleSave = (id: string, updates: { title: string; content: string; author: string; color: string; }) => {
     onEdit(id, updates);
     setIsEditModalOpen(false);
   };

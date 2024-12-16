@@ -12,7 +12,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     // 在实际应用中，这里应该从API获取文章数据
     // 现在我们只是模拟从本地存储中获取数据
     const storedArticles = JSON.parse(localStorage.getItem('articles') || '[]')
-    const foundArticle = storedArticles.find((a: any) => a.id === parseInt(params.id))
+    const foundArticle = storedArticles.find((a: Article) => a.id === parseInt(params.id))
     if (foundArticle) {
       setArticle(foundArticle)
     }
@@ -23,7 +23,7 @@ export default function EditArticle({ params }: { params: { id: string } }) {
     // 在实际应用中，这里应该发送PUT请求到API
     // 现在我们只是更新本地存储
     const storedArticles = JSON.parse(localStorage.getItem('articles') || '[]')
-    const updatedArticles = storedArticles.map((a: any) => 
+    const updatedArticles = storedArticles.map((a: Article) => 
       a.id === parseInt(params.id) ? { ...a, ...article } : a
     )
     localStorage.setItem('articles', JSON.stringify(updatedArticles))

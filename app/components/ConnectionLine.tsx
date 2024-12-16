@@ -27,8 +27,8 @@ const ConnectionLine: React.FC<ConnectionLineProps> = ({
     const dy = end.y - start.y;
     const controlLen = Math.min(Math.abs(dx), Math.abs(dy), 100);
 
-    let cp1: Point = { x: start.x, y: start.y };
-    let cp2: Point = { x: end.x, y: end.y };
+    const cp1: Point = { x: start.x, y: start.y };
+    const cp2: Point = { x: end.x, y: end.y };
 
     switch (startPosition) {
       case 'right':
