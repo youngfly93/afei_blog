@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { Article } from '../page'
 
 export default function EditArticle({ params }: { params: { id: string } }) {
   const router = useRouter()
