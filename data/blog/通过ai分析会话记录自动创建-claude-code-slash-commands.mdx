@@ -1,0 +1,76 @@
+---
+title: '通过AI分析会话记录自动创建 Claude Code Slash Commands'
+date: '2025-07-04'
+tags: ['claude_code']
+draft: false
+summary: 'Claude Code小技巧'
+---
+
+# 通过AI分析会话记录自动创建 Claude Code Slash Commands
+
+这是一个关于利用AI（特别是具备强大长文本处理能力的模型，如Gemini）自动为 `claude code` 创建和管理自定义斜杠命令（slash commands）的方法论。
+
+## 核心思路
+
+核心在于让一个AI agent读取用户与 `claude code` 的完整会话历史记录，通过模式识别提取出用户频繁使用的指令或问题，然后将这些高频指令转化为可供快速调用的、个性化的斜杠命令。
+
+## 实现流程
+
+1.  **数据读取 (Data Ingestion)**
+    *   **Agent**: 推荐使用 `gemini-cli` 或其他能够处理长文本的AI agent。
+    *   **任务**: 读取用户与 `claude code` 的全部或近期会话历史记录（例如，JSON或文本格式的导出文件）。
+
+2.  **高频内容提取 (Content Extraction)**
+    *   **Agent**: `gemini` / `claude code`
+    *   **任务**: 分析会话数据，提取出用户侧高频次、独立且完整的指令性语句。
+    *   **示例**:
+        *   `"请帮我用TDD的方式实现一个斐波那契数列函数"`
+        *   `"解释一下这段正则表达式的含义"`
+        *   `"将这段Python代码重构成更符合PEP8规范的风格"`
+
+3.  **初始文件存储 (Initial File Storage)**
+    *   **机制**: 每提取出一个高频指令，就将其作为内容保存为一个新的 Markdown 文件。
+    *   **路径**: `~/.claude/commands/`
+    *   **格式**: 一句话（一个完整指令）对应一个 `.md` 文件。
+        ```bash
+        # 初始可能以临时文件名保存
+        ~/.claude/commands/temp_command_1.md
+        ~/.claude/commands/temp_command_2.md
+        ```
+
+4.  **命令生成与重命名 (Command Generation & Renaming)**
+    *   **Agent**: `gemini` / `augment` （长文本能力强的模型效果更佳）
+    *   **任务**:
+        1.  逐一读取 `~/.claude/commands/` 目录下的每个 `.md` 文件内容。
+        2.  对每个文件的内容（即那个高频指令）进行意图分析。
+        3.  **用一个高度浓缩、精准的英文单词来概括这个指令的核心意图。**
+        4.  使用这个英文单词作为新的文件名，重命名对应的 `.md` 文件。
+
+    *   **示例**:
+        *   `"请将这段Python代码重构..."` -> Agent分析后提炼出 `refactor` -> 文件重命名为 `refactor.md`。
+        *   `"解释一下这段正则表达式..."` -> Agent分析后提炼出 `explain` -> 文件重命名为 `explain.md`。
+        *   `"为以下函数编写单元测试..."` -> Agent分析后提炼出 `test` -> 文件重命名为 `test.md`。
+
+## 最终效果
+
+最终，用户的命令目录会呈现如下结构，非常清晰和可维护：
+
+```
+~/.claude/commands/
+├── refactor.md      # 内容: "请将这段Python代码重构成更符合PEP8规范的风格"
+├── explain.md       # 内容: "解释一下这段正则表达式的含义"
+├── test.md          # 内容: "为以下函数编写单元测试"
+├── document.md      # 内容: "为这段代码生成文档字符串（docstring）"
+└── ...
+```
+
+当用户在 `claude code` 中输入 `/refactor` 时，系统会自动展开 `refactor.md` 文件中的完整指令。
+
+## 关键成功因素
+
+*   **提示词的精确度**: 第4步中，用于让Agent提炼核心英文单词的提示词（Prompt）至关重要。一个好的提示词能确保生成的文件名既简短又准确地反映其内容。
+    *   **Prompt示例**: `"Read the following user command. Summarize its primary intent into a single, lowercase English verb or noun that would be suitable for a command-line interface command. For example, for 'Please rewrite this code to be more efficient', the output should be 'refactor'.\n\nUser Command: [这里插入md文件内容]"`
+
+## 扩展应用：构建 Hooks
+
+这个思路同样可以扩展到构建 `hooks`（钩子）。例如，可以分析用户在提交代码前的习惯性操作（如格式化、运行linter等），并将这些操作序列化，保存为一个 `pre-commit.md` 的命令，从而实现更复杂的自动化工作流。
