@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="100" height="50" viewBox="0 0 100 50" xmlns="http://www.w3.org/2000/svg">
-  <rect width="100" height="50" rx="8" fill="#0f4c3a"/>
-  <text x="50" y="32" text-anchor="middle" fill="white" font-family="Georgia, serif" font-size="24" font-style="italic" font-weight="500">afei</text>
+  <text x="50" y="32" text-anchor="middle" fill="currentColor" font-family="Georgia, serif" font-size="24" font-style="italic" font-weight="500">afei</text>
 </svg>

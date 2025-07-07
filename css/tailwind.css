@@ -57,6 +57,18 @@
   color utility to any element that depends on these defaults.
 */
 @layer base {
+  html,
+  body {
+    background: transparent !important;
+  }
+
+  /* Ensure all major container elements are transparent */
+  main,
+  section,
+  div:not([class*='bg-']):not([style*='background']) {
+    background: transparent !important;
+  }
+
   *,
   ::after,
   ::before,
