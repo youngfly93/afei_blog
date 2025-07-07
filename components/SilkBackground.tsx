@@ -114,22 +114,21 @@ export default function SilkBackground() {
   const currentTheme = theme === 'system' ? systemTheme : theme
   const isDark = currentTheme === 'dark'
 
-  // Choose colors based on theme - light green palette
-  const lightGreenColor = '#4ADE80' // Light green for light theme
-  const darkGreenColor = '#22C55E' // Slightly darker green for dark theme
+  // Using official recommended parameters
+  const officialColor = '#7B7481' // Official recommended color
 
   const uniforms = useMemo(
     () => ({
-      uSpeed: { value: 3 }, // Slower, more elegant movement
-      uScale: { value: 1.5 }, // Slightly larger scale for better coverage
-      uNoiseIntensity: { value: 0.8 }, // Reduced noise for cleaner look
+      uSpeed: { value: 5 }, // Official recommended speed
+      uScale: { value: 1 }, // Official recommended scale
+      uNoiseIntensity: { value: 1.5 }, // Official recommended noise intensity
       uColor: {
-        value: new Color(...hexToNormalizedRGB(isDark ? darkGreenColor : lightGreenColor)),
+        value: new Color(...hexToNormalizedRGB(officialColor)),
       },
-      uRotation: { value: 0.1 }, // Slight rotation for more dynamic feel
+      uRotation: { value: 0 }, // Official recommended rotation (0 radians)
       uTime: { value: 0 },
     }),
-    [isDark]
+    []
   )
 
   return (

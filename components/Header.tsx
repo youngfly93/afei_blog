@@ -19,8 +19,8 @@ const Header = () => {
           <Image
             src="/static/images/logo.png"
             alt="afei logo"
-            width={40}
-            height={40}
+            width={80}
+            height={80}
             className="rounded-lg"
           />
           <div className="hidden text-2xl font-semibold sm:block">{siteMetadata.headerTitle}</div>
@@ -34,7 +34,7 @@ const Header = () => {
               <Link
                 key={link.title}
                 href={link.href}
-                className="hover:text-primary-500 dark:hover:text-primary-400 font-medium whitespace-nowrap text-gray-900 dark:text-gray-100"
+                className="hover:text-primary-600 dark:hover:text-primary-400 font-medium whitespace-nowrap text-primary-700 dark:text-primary-300"
               >
                 {link.title}
               </Link>
