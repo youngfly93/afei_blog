@@ -15,33 +15,32 @@ export async function GET() {
         imagesDir: {
           absolute: imagesDir,
           relative: './public/static/images/',
-          exists: existsSync(imagesDir)
+          exists: existsSync(imagesDir),
         },
         dataDir: {
           absolute: dataDir,
           relative: './data/',
-          exists: existsSync(dataDir)
+          exists: existsSync(dataDir),
         },
         projectsData: {
           absolute: projectsDataPath,
           relative: './data/projectsData.ts',
-          exists: existsSync(projectsDataPath)
-        }
-      }
+          exists: existsSync(projectsDataPath),
+        },
+      },
     }
 
     return NextResponse.json({
       success: true,
       message: '路径检查完成',
-      data: pathInfo
+      data: pathInfo,
     })
-
   } catch (error) {
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         message: '路径检查失败',
-        error: error instanceof Error ? error.message : '未知错误'
+        error: error instanceof Error ? error.message : '未知错误',
       },
       { status: 500 }
     )

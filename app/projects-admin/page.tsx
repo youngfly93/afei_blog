@@ -17,7 +17,7 @@ export default function ProjectsAdminPage() {
     title: '',
     description: '',
     href: '',
-    imgSrc: ''
+    imgSrc: '',
   })
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null)
@@ -32,7 +32,7 @@ export default function ProjectsAdminPage() {
       try {
         const response = await fetch('/api/projects/current')
         const result = await response.json()
-        
+
         if (result.success) {
           setProjects(result.projects)
         }
@@ -85,9 +85,9 @@ export default function ProjectsAdminPage() {
         reader.readAsDataURL(file)
 
         // 更新项目信息
-        setCurrentProject(prev => ({
+        setCurrentProject((prev) => ({
           ...prev,
-          imgSrc: result.url
+          imgSrc: result.url,
         }))
 
         alert(`图片上传成功！\n保存路径：${result.filePath || result.message}`)
@@ -111,12 +111,16 @@ export default function ProjectsAdminPage() {
 }
 
 const projectsData: Project[] = [
-${projects.map(project => `  {
+${projects
+  .map(
+    (project) => `  {
     title: '${project.title}',
     description: \`${project.description}\`,
     imgSrc: '${project.imgSrc}',
     href: '${project.href}',
-  }`).join(',\n')}
+  }`
+  )
+  .join(',\n')}
 ]
 
 export default projectsData`
@@ -126,7 +130,7 @@ export default projectsData`
 
   const saveProjectsToServer = async () => {
     setSaving(true)
-    
+
     try {
       const response = await fetch('/api/projects', {
         method: 'POST',
@@ -189,7 +193,7 @@ export default projectsData`
       title: '',
       description: '',
       href: '',
-      imgSrc: ''
+      imgSrc: '',
     })
     setImagePreview('')
     if (fileInputRef.current) {
@@ -214,7 +218,7 @@ export default projectsData`
       title: '',
       description: '',
       href: '',
-      imgSrc: ''
+      imgSrc: '',
     })
     setEditingIndex(null)
     setImagePreview('')
@@ -227,8 +231,8 @@ export default projectsData`
     return (
       <div className="mx-auto max-w-6xl px-4 py-8">
         <h1 className="mb-8 text-3xl font-bold">项目管理</h1>
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600 mx-auto"></div>
+        <div className="py-8 text-center">
+          <div className="border-primary-600 mx-auto h-8 w-8 animate-spin rounded-full border-b-2"></div>
           <p className="mt-2 text-gray-500">正在加载项目数据...</p>
         </div>
       </div>
@@ -238,69 +242,73 @@ export default projectsData`
   return (
     <div className="mx-auto max-w-6xl px-4 py-8">
       <h1 className="mb-8 text-3xl font-bold">项目管理</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         {/* 左侧：添加/编辑项目表单 */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold">
             {editingIndex !== null ? '编辑项目' : '添加新项目'}
           </h2>
-          
+
           <div>
-            <label className="block text-sm font-medium mb-2">项目名称 *</label>
+            <label className="mb-2 block text-sm font-medium">项目名称 *</label>
             <input
               type="text"
               value={currentProject.title}
-              onChange={(e) => setCurrentProject(prev => ({ ...prev, title: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              onChange={(e) => setCurrentProject((prev) => ({ ...prev, title: e.target.value }))}
+              className="focus:ring-primary-500 w-full rounded-md border border-gray-300 p-3 focus:ring-2 focus:outline-none"
               placeholder="输入项目名称"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">GitHub 链接 *</label>
+            <label className="mb-2 block text-sm font-medium">GitHub 链接 *</label>
             <input
               type="url"
               value={currentProject.href}
-              onChange={(e) => setCurrentProject(prev => ({ ...prev, href: e.target.value }))}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              onChange={(e) => setCurrentProject((prev) => ({ ...prev, href: e.target.value }))}
+              className="focus:ring-primary-500 w-full rounded-md border border-gray-300 p-3 focus:ring-2 focus:outline-none"
               placeholder="https://github.com/username/repository"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">项目描述 *</label>
+            <label className="mb-2 block text-sm font-medium">项目描述 *</label>
             <textarea
               value={currentProject.description}
-              onChange={(e) => setCurrentProject(prev => ({ ...prev, description: e.target.value }))}
+              onChange={(e) =>
+                setCurrentProject((prev) => ({ ...prev, description: e.target.value }))
+              }
               rows={4}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500"
+              className="focus:ring-primary-500 w-full rounded-md border border-gray-300 p-3 focus:ring-2 focus:outline-none"
               placeholder="详细描述项目功能和特点..."
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">项目图片</label>
+            <label className="mb-2 block text-sm font-medium">项目图片</label>
             <input
               ref={fileInputRef}
               type="file"
               accept="image/*"
               onChange={handleImageUpload}
               disabled={uploading}
-              className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 disabled:bg-gray-100"
+              className="focus:ring-primary-500 w-full rounded-md border border-gray-300 p-3 focus:ring-2 focus:outline-none disabled:bg-gray-100"
             />
-            <p className="text-sm text-gray-500 mt-1">
-              {uploading ? '正在上传图片...' : '支持 PNG、JPG、SVG 格式，大小不超过 1MB（会自动保存到服务器）'}
+            <p className="mt-1 text-sm text-gray-500">
+              {uploading
+                ? '正在上传图片...'
+                : '支持 PNG、JPG、SVG 格式，大小不超过 1MB（会自动保存到服务器）'}
             </p>
           </div>
 
           {imagePreview && (
             <div>
-              <label className="block text-sm font-medium mb-2">图片预览</label>
+              <label className="mb-2 block text-sm font-medium">图片预览</label>
               <img
                 src={imagePreview}
                 alt="预览"
-                className="w-full max-w-xs h-48 object-cover border border-gray-300 rounded-md"
+                className="h-48 w-full max-w-xs rounded-md border border-gray-300 object-cover"
               />
             </div>
           )}
@@ -308,15 +316,15 @@ export default projectsData`
           <div className="flex gap-4">
             <button
               onClick={addProject}
-              className="bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors"
+              className="bg-primary-600 hover:bg-primary-700 rounded-md px-6 py-3 text-white transition-colors"
             >
               {editingIndex !== null ? '更新项目' : '添加项目'}
             </button>
-            
+
             {editingIndex !== null && (
               <button
                 onClick={cancelEdit}
-                className="bg-gray-500 text-white px-6 py-3 rounded-md hover:bg-gray-600 transition-colors"
+                className="rounded-md bg-gray-500 px-6 py-3 text-white transition-colors hover:bg-gray-600"
               >
                 取消编辑
               </button>
@@ -327,7 +335,7 @@ export default projectsData`
         {/* 右侧：项目列表 */}
         <div className="space-y-6">
           <h2 className="text-2xl font-semibold">当前项目列表</h2>
-          
+
           {projects.length === 0 ? (
             <p className="text-gray-500">还没有项目，添加第一个项目吧！</p>
           ) : (
@@ -335,76 +343,78 @@ export default projectsData`
               {projects.map((project, index) => (
                 <div
                   key={index}
-                  className="border border-gray-200 rounded-lg p-4 hover:shadow-md transition-shadow"
+                  className="rounded-lg border border-gray-200 p-4 transition-shadow hover:shadow-md"
                 >
-                  <div className="flex justify-between items-start mb-3">
-                    <h3 className="font-semibold text-lg">{project.title}</h3>
+                  <div className="mb-3 flex items-start justify-between">
+                    <h3 className="text-lg font-semibold">{project.title}</h3>
                     <div className="flex gap-2">
                       <button
                         onClick={() => editProject(index)}
-                        className="text-blue-600 hover:text-blue-800 text-sm"
+                        className="text-sm text-blue-600 hover:text-blue-800"
                       >
                         编辑
                       </button>
                       <button
                         onClick={() => deleteProject(index)}
-                        className="text-red-600 hover:text-red-800 text-sm"
+                        className="text-sm text-red-600 hover:text-red-800"
                       >
                         删除
                       </button>
                     </div>
                   </div>
-                  
-                  <p className="text-gray-600 text-sm mb-3 line-clamp-3">
-                    {project.description}
-                  </p>
-                  
+
+                  <p className="mb-3 line-clamp-3 text-sm text-gray-600">{project.description}</p>
+
                   <div className="flex items-center justify-between">
                     <a
                       href={project.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-primary-600 hover:text-primary-800 text-sm truncate max-w-xs"
+                      className="text-primary-600 hover:text-primary-800 max-w-xs truncate text-sm"
                     >
                       {project.href}
                     </a>
-                    {project.imgSrc && (
-                      <span className="text-green-600 text-sm">📷 有图片</span>
-                    )}
+                    {project.imgSrc && <span className="text-sm text-green-600">📷 有图片</span>}
                   </div>
                 </div>
               ))}
             </div>
           )}
 
-          <div className="border-t pt-6 space-y-4">
+          <div className="space-y-4 border-t pt-6">
             <button
               onClick={saveProjectsToServer}
               disabled={saving}
-              className="w-full bg-primary-600 text-white px-6 py-3 rounded-md hover:bg-primary-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="bg-primary-600 hover:bg-primary-700 w-full rounded-md px-6 py-3 text-white transition-colors disabled:cursor-not-allowed disabled:bg-gray-400"
             >
               {saving ? '正在保存...' : '🚀 直接保存到服务器'}
             </button>
 
             <button
               onClick={downloadConfig}
-              className="w-full bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition-colors"
+              className="w-full rounded-md bg-green-600 px-6 py-3 text-white transition-colors hover:bg-green-700"
             >
               📥 下载配置文件 (备用方式)
             </button>
-            
-            <div className="p-4 bg-green-50 rounded-md">
-              <h3 className="font-medium text-green-900 mb-2">✨ 全自动功能：</h3>
-              <ol className="text-sm text-green-800 space-y-1">
-                <li>1. 上传图片 → 自动保存到 <code className="bg-green-100 px-1 rounded">./public/static/images/</code></li>
+
+            <div className="rounded-md bg-green-50 p-4">
+              <h3 className="mb-2 font-medium text-green-900">✨ 全自动功能：</h3>
+              <ol className="space-y-1 text-sm text-green-800">
+                <li>
+                  1. 上传图片 → 自动保存到{' '}
+                  <code className="rounded bg-green-100 px-1">./public/static/images/</code>
+                </li>
                 <li>2. 填写项目信息</li>
-                <li>3. 点击"直接保存到服务器" → 自动更新 <code className="bg-green-100 px-1 rounded">./data/projectsData.ts</code></li>
+                <li>
+                  3. 点击"直接保存到服务器" → 自动更新{' '}
+                  <code className="rounded bg-green-100 px-1">./data/projectsData.ts</code>
+                </li>
                 <li>4. 无需手动操作任何文件！</li>
               </ol>
             </div>
 
-            <div className="p-4 bg-blue-50 rounded-md">
-              <h3 className="font-medium text-blue-900 mb-2">💡 备用方式：</h3>
+            <div className="rounded-md bg-blue-50 p-4">
+              <h3 className="mb-2 font-medium text-blue-900">💡 备用方式：</h3>
               <p className="text-sm text-blue-800">
                 如果自动保存失败，可以使用"下载配置文件"按钮，然后手动替换文件。
               </p>
@@ -419,7 +429,7 @@ export default projectsData`
                     console.error('路径检查失败:', error)
                   }
                 }}
-                className="mt-2 text-xs bg-blue-100 hover:bg-blue-200 px-2 py-1 rounded text-blue-800"
+                className="mt-2 rounded bg-blue-100 px-2 py-1 text-xs text-blue-800 hover:bg-blue-200"
               >
                 🔍 检查文件路径
               </button>

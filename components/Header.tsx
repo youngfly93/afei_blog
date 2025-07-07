@@ -1,10 +1,10 @@
 import siteMetadata from '@/data/siteMetadata'
 import headerNavLinks from '@/data/headerNavLinks'
-import Logo from '@/data/logo.svg'
 import Link from './Link'
 import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
+import Image from 'next/image'
 
 const Header = () => {
   let headerClass = 'flex items-center w-full bg-transparent justify-between py-10'
@@ -15,8 +15,15 @@ const Header = () => {
   return (
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
-        <div className="flex items-center">
-          <Logo />
+        <div className="flex items-center space-x-3">
+          <Image
+            src="/static/images/logo.png"
+            alt="afei logo"
+            width={40}
+            height={40}
+            className="rounded-lg"
+          />
+          <div className="hidden text-2xl font-semibold sm:block">{siteMetadata.headerTitle}</div>
         </div>
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
