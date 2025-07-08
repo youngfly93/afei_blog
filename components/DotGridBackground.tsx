@@ -10,19 +10,22 @@ export default function DotGridBackground() {
   const currentTheme = theme === 'system' ? systemTheme : theme
   const isDark = currentTheme === 'dark'
 
-  // Choose green colors based on theme
-  const lightGreenBase = '#22C55E' // Green-500
-  const lightGreenActive = '#4ADE80' // Green-400
-  const darkGreenBase = '#16A34A' // Green-600
-  const darkGreenActive = '#22C55E' // Green-500
+  // Choose colors based on theme
+  // Base color is white/light gray for visibility
+  const lightBaseColor = '#ffffff' // White
+  const darkBaseColor = '#e5e7eb' // Gray-200
+
+  // Active color matches the primary theme green
+  const lightActiveColor = '#0f4c3a' // Primary-700 (dark green)
+  const darkActiveColor = '#10b981' // Emerald-500 (bright green for dark mode)
 
   return (
     <div className="fixed inset-0 -z-10 h-full w-full" style={{ pointerEvents: 'none' }}>
       <DotGrid
         dotSize={8}
         gap={25}
-        baseColor={isDark ? darkGreenBase : lightGreenBase}
-        activeColor={isDark ? darkGreenActive : lightGreenActive}
+        baseColor={isDark ? darkBaseColor : lightBaseColor}
+        activeColor={isDark ? darkActiveColor : lightActiveColor}
         proximity={120}
         speedTrigger={80}
         shockRadius={200}
