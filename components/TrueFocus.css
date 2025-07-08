@@ -2,15 +2,16 @@
   position: relative;
   display: flex;
   gap: 0.75em;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
+  padding-left: 1rem;
 }
 
 .focus-word {
   position: relative;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-size: 2.25rem;
+  font-weight: 800;
   cursor: pointer;
   transition:
     filter 0.3s ease,
@@ -37,38 +38,38 @@
 
 .corner {
   position: absolute;
-  width: 0.5rem;
-  height: 0.5rem;
-  border: 2px solid var(--border-color, #0f4c3a);
-  filter: drop-shadow(0px 0px 3px var(--border-color, #0f4c3a));
-  border-radius: 2px;
+  width: 0.75rem;
+  height: 0.75rem;
+  border: 3px solid var(--border-color, #0f4c3a);
+  filter: drop-shadow(0px 0px 4px var(--border-color, #0f4c3a));
+  border-radius: 3px;
   transition: none;
 }
 
 .top-left {
-  top: -6px;
-  left: -6px;
+  top: -8px;
+  left: -8px;
   border-right: none;
   border-bottom: none;
 }
 
 .top-right {
-  top: -6px;
-  right: -6px;
+  top: -8px;
+  right: -8px;
   border-left: none;
   border-bottom: none;
 }
 
 .bottom-left {
-  bottom: -6px;
-  left: -6px;
+  bottom: -8px;
+  left: -8px;
   border-right: none;
   border-top: none;
 }
 
 .bottom-right {
-  bottom: -6px;
-  right: -6px;
+  bottom: -8px;
+  right: -8px;
   border-left: none;
   border-top: none;
 }

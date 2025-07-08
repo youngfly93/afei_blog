@@ -5,7 +5,6 @@ import MobileNav from './MobileNav'
 import ThemeSwitch from './ThemeSwitch'
 import SearchButton from './SearchButton'
 import Image from 'next/image'
-import TrueFocus from './TrueFocus'
 
 const Header = () => {
   let headerClass = 'flex items-center w-full bg-transparent justify-between py-10'
@@ -16,24 +15,13 @@ const Header = () => {
   return (
     <header className={headerClass}>
       <Link href="/" aria-label={siteMetadata.headerTitle}>
-        <div className="flex items-center space-x-3">
-          <Image
-            src="/static/images/logo.png"
-            alt="afei logo"
-            width={60}
-            height={60}
-            className="rounded-lg"
-          />
-          <TrueFocus
-            sentence="Hello Afei"
-            manualMode={false}
-            blurAmount={3}
-            borderColor="#0f4c3a"
-            glowColor="rgba(15, 76, 58, 0.6)"
-            animationDuration={1}
-            pauseBetweenAnimations={2}
-          />
-        </div>
+        <Image
+          src="/static/images/logo.png"
+          alt="afei logo"
+          width={180}
+          height={180}
+          className="rounded-lg"
+        />
       </Link>
       <div className="flex items-center space-x-4 leading-5 sm:-mr-6 sm:space-x-6">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex">

@@ -3,6 +3,7 @@
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import ProfileCard from '@/components/ProfileCard'
+import TrueFocusCard from '@/components/TrueFocusCard'
 import siteMetadata from '@/data/siteMetadata'
 import { formatDate } from 'pliny/utils/formatDate'
 import NewsletterForm from 'pliny/ui/NewsletterForm'
@@ -19,9 +20,13 @@ export default function Home({ posts }) {
     <>
       {/* 响应式两列布局 */}
       <div className="flex flex-col gap-6 lg:flex-row lg:gap-12">
-        {/* 左侧 ProfileCard */}
+        {/* 左侧卡片区域 */}
         <div className="flex-shrink-0 lg:-ml-8 lg:w-80 xl:-ml-12 xl:w-96">
-          <div className="sticky top-8">
+          <div className="sticky top-8 space-y-12">
+            {/* TrueFocus 卡片 */}
+            <TrueFocusCard />
+
+            {/* ProfileCard 向下移动 */}
             <ProfileCard
               name="afei"
               title="全栈开发者"
@@ -37,10 +42,10 @@ export default function Home({ posts }) {
         <div className="min-w-0 flex-1">
           <div className="divide-y divide-gray-200 dark:divide-gray-700">
             <div className="space-y-2 pt-6 pb-8 md:space-y-5">
-              <h1 className="text-3xl leading-9 font-extrabold tracking-tight text-primary-800 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14 dark:text-primary-200">
+              <h1 className="text-primary-800 dark:text-primary-200 text-3xl leading-9 font-extrabold tracking-tight sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
                 Latest
               </h1>
-              <p className="text-lg leading-7 text-primary-600 dark:text-primary-400">
+              <p className="text-primary-600 dark:text-primary-400 text-lg leading-7">
                 {siteMetadata.description}
               </p>
             </div>
@@ -54,7 +59,7 @@ export default function Home({ posts }) {
                       <div className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
                         <dl>
                           <dt className="sr-only">Published on</dt>
-                          <dd className="text-base leading-6 font-medium text-primary-600 dark:text-primary-400">
+                          <dd className="text-primary-600 dark:text-primary-400 text-base leading-6 font-medium">
                             <time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
                           </dd>
                         </dl>
@@ -75,7 +80,7 @@ export default function Home({ posts }) {
                                 ))}
                               </div>
                             </div>
-                            <div className="prose max-w-none text-primary-600 dark:text-primary-400">
+                            <div className="prose text-primary-600 dark:text-primary-400 max-w-none">
                               {summary}
                             </div>
                           </div>
