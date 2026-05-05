@@ -107,7 +107,7 @@ const SilkPlane = forwardRef<THREE.Mesh, SilkPlaneProps>(function SilkPlane({ un
 SilkPlane.displayName = 'SilkPlane'
 
 export default function SilkBackground() {
-  const meshRef = useRef()
+  const meshRef = useRef<THREE.Mesh | null>(null)
   const { theme, systemTheme } = useTheme()
 
   // Determine current theme

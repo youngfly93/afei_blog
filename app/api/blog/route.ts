@@ -3,6 +3,25 @@ import { writeFile, readdir, readFile, unlink } from 'fs/promises'
 import { existsSync } from 'fs'
 import path from 'path'
 
+type BlogFrontmatter = {
+  title?: string
+  date?: string
+  tags?: string[]
+  draft?: boolean
+  summary?: string
+}
+
+type SaveBlogPayload = {
+  filename: string
+  title: string
+  date: string
+  tags: string[]
+  draft: boolean
+  summary: string
+  content: string
+  isNew?: boolean
+}
+
 // 获取所有博客文章
 export async function GET() {
   try {
@@ -22,7 +41,7 @@ export async function GET() {
 
         // 解析 frontmatter
         const frontmatterMatch = content.match(/^---\n([\s\S]*?)\n---/)
-        const frontmatter: any = {}
+        const frontmatter: BlogFrontmatter = {}
         let body = content
 
         if (frontmatterMatch) {
@@ -37,7 +56,7 @@ export async function GET() {
               if (key === 'tags') {
                 // 解析数组格式 ['tag1', 'tag2']
                 frontmatter[key] = value
-                  .replace(/[\[\]']/g, '')
+                  .replace(/[[\]']/g, '')
                   .split(',')
                   .map((t) => t.trim())
               } else if (key === 'draft') {
@@ -75,7 +94,8 @@ export async function GET() {
 // 保存博客文章
 export async function POST(request: NextRequest) {
   try {
-    const { filename, title, date, tags, draft, summary, content, isNew } = await request.json()
+    const { filename, title, date, tags, draft, summary, content, isNew }: SaveBlogPayload =
+      await request.json()
 
     if (!filename || !title || !content) {
       return NextResponse.json({ success: false, message: '缺少必要字段' }, { status: 400 })
@@ -85,18 +105,18 @@ export async function POST(request: NextRequest) {
 
     // 确保目录存在
     if (!existsSync(blogDir)) {
-      await writeFile(blogDir, '', { flag: 'wx' }).catch(() => {})
+      await import('fs/promises').then(({ mkdir }) => mkdir(blogDir, { recursive: true }))
     }
 
     // 生成文件内容
     const tagsString = tags.map((tag: string) => `'${tag}'`).join(', ')
     const fileContent = `---
-title: '${title.replace(/'/g, "\\\'")}'
-date: '${date}'
-tags: [${tagsString}]
-draft: ${draft}
-summary: '${summary.replace(/'/g, "\\\'")}'
----
+ title: '${title.replace(/'/g, "\\'")}'
+ date: '${date}'
+ tags: [${tagsString}]
+ draft: ${draft}
+ summary: '${summary.replace(/'/g, "\\'")}'
+ ---
 
 ${content}`
 

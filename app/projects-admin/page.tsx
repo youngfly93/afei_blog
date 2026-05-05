@@ -251,8 +251,11 @@ export default projectsData`
           </h2>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">项目名称 *</label>
+            <label htmlFor="project-title" className="mb-2 block text-sm font-medium">
+              项目名称 *
+            </label>
             <input
+              id="project-title"
               type="text"
               value={currentProject.title}
               onChange={(e) => setCurrentProject((prev) => ({ ...prev, title: e.target.value }))}
@@ -262,8 +265,11 @@ export default projectsData`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">GitHub 链接 *</label>
+            <label htmlFor="project-href" className="mb-2 block text-sm font-medium">
+              GitHub 链接 *
+            </label>
             <input
+              id="project-href"
               type="url"
               value={currentProject.href}
               onChange={(e) => setCurrentProject((prev) => ({ ...prev, href: e.target.value }))}
@@ -273,8 +279,11 @@ export default projectsData`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">项目描述 *</label>
+            <label htmlFor="project-description" className="mb-2 block text-sm font-medium">
+              项目描述 *
+            </label>
             <textarea
+              id="project-description"
               value={currentProject.description}
               onChange={(e) =>
                 setCurrentProject((prev) => ({ ...prev, description: e.target.value }))
@@ -286,8 +295,11 @@ export default projectsData`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">项目图片</label>
+            <label htmlFor="project-image" className="mb-2 block text-sm font-medium">
+              项目图片
+            </label>
             <input
+              id="project-image"
               ref={fileInputRef}
               type="file"
               accept="image/*"
@@ -304,7 +316,7 @@ export default projectsData`
 
           {imagePreview && (
             <div>
-              <label className="mb-2 block text-sm font-medium">图片预览</label>
+              <p className="mb-2 block text-sm font-medium">图片预览</p>
               <img
                 src={imagePreview}
                 alt="预览"

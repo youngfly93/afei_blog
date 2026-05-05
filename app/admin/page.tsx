@@ -239,8 +239,11 @@ ${currentArticle.content}`
           <h2 className="text-2xl font-semibold">{isNew ? '写新文章' : `编辑文章`}</h2>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">文章标题 *</label>
+            <label htmlFor="article-title" className="mb-2 block text-sm font-medium">
+              文章标题 *
+            </label>
             <input
+              id="article-title"
               type="text"
               value={currentArticle.title}
               onChange={(e) => setCurrentArticle((prev) => ({ ...prev, title: e.target.value }))}
@@ -251,8 +254,11 @@ ${currentArticle.content}`
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="mb-2 block text-sm font-medium">发布日期</label>
+              <label htmlFor="article-date" className="mb-2 block text-sm font-medium">
+                发布日期
+              </label>
               <input
+                id="article-date"
                 type="date"
                 value={currentArticle.date}
                 onChange={(e) => setCurrentArticle((prev) => ({ ...prev, date: e.target.value }))}
@@ -275,8 +281,11 @@ ${currentArticle.content}`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">文章摘要</label>
+            <label htmlFor="article-summary" className="mb-2 block text-sm font-medium">
+              文章摘要
+            </label>
             <input
+              id="article-summary"
               type="text"
               value={currentArticle.summary}
               onChange={(e) => setCurrentArticle((prev) => ({ ...prev, summary: e.target.value }))}
@@ -286,8 +295,11 @@ ${currentArticle.content}`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">标签 (用逗号分隔)</label>
+            <label htmlFor="article-tags" className="mb-2 block text-sm font-medium">
+              标签 (用逗号分隔)
+            </label>
             <input
+              id="article-tags"
               type="text"
               value={currentArticle.tags}
               onChange={(e) => setCurrentArticle((prev) => ({ ...prev, tags: e.target.value }))}
@@ -297,8 +309,11 @@ ${currentArticle.content}`
           </div>
 
           <div>
-            <label className="mb-2 block text-sm font-medium">文章内容 (Markdown) *</label>
+            <label htmlFor="article-content" className="mb-2 block text-sm font-medium">
+              文章内容 (Markdown) *
+            </label>
             <textarea
+              id="article-content"
               value={currentArticle.content}
               onChange={(e) => setCurrentArticle((prev) => ({ ...prev, content: e.target.value }))}
               rows={15}

@@ -3,9 +3,24 @@ import { writeFile, mkdir } from 'fs/promises'
 import { existsSync } from 'fs'
 import path from 'path'
 
+type ProjectConfig = {
+  title: string
+  description: string
+  href: string
+  imgSrc: string
+}
+
+type SaveProjectsPayload = {
+  projects: ProjectConfig[]
+  imageData?: Array<{
+    data: string
+    filename: string
+  }>
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { projects, imageData } = await request.json()
+    const { projects, imageData }: SaveProjectsPayload = await request.json()
 
     // 1. 保存图片文件
     if (imageData && imageData.length > 0) {
@@ -39,7 +54,7 @@ export async function POST(request: NextRequest) {
 const projectsData: Project[] = [
 ${projects
   .map(
-    (project: any) => `  {
+    (project: ProjectConfig) => `  {
     title: '${project.title.replace(/'/g, "\\'")}',
     description: \`${project.description.replace(/`/g, '\\`')}\`,
     imgSrc: '${project.imgSrc}',
